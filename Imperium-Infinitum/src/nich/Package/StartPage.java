@@ -27,7 +27,6 @@ public class StartPage extends Activity {
 		Button button = (Button) findViewById(R.id.StartBtnId);
 		Intent intent = new Intent(button.getContext(), MainPage.class);
 		startActivity(intent);
-		
 	}
 
 }
