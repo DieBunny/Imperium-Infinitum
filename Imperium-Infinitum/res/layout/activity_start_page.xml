@@ -18,20 +18,20 @@
         android:layout_marginTop="126dp" >
 
         <RadioButton
-            android:id="@+id/radio0"
+            android:id="@+id/radio2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="2 Players" />
 
         <RadioButton
-            android:id="@+id/radio1"
+            android:id="@+id/radio3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="3 Players" />
 
         <RadioButton
-            android:id="@+id/radio2"
+            android:id="@+id/radio4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4 Players" />
