@@ -8,6 +8,8 @@ public class Resources {
 	int Frigate;
 
 	
+	
+	
 	//initial resources for player - 0,0,0,0,0
 	//permanent resources for planet - 0,1,0,0,1
 	public Resources (int fuel, int research, int battleship, int destroyer, int frigate)
