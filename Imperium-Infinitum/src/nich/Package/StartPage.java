@@ -45,7 +45,7 @@ public class StartPage extends Activity {
 		    RadioButton btn = (RadioButton) rg.getChildAt(radioId);
 		    String playerText = (String) btn.getText();
 		    playerText = playerText.substring(0,1);
-		    int playerCount = Integer.parseInt(playerText);
+		    final int playerCount = Integer.parseInt(playerText);
 		    
 		final Button button = (Button) findViewById(R.id.StartBtnId);
 		
@@ -72,6 +72,7 @@ public class StartPage extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Intent intent = new Intent(button.getContext(), MainPage.class);
+				intent.putExtra("PlayerCount", playerCount);
 				startActivity(intent);
 				
 			}
