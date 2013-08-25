@@ -15,7 +15,7 @@ public class HexagonDrawing {
 		
 		int i, j;
 		float y,x;
-		float d=(float) 1.0;// d is the distance between 2 points as indicated in your schema
+		float d=(float) (80.0 / 2* Math.sqrt(3)-11);// d is the distance between 2 points as indicated in your schema
 		for(i=0; i<=(n-1); i++) {
 		    y = (float) ((Math.sqrt(3)*i*d)/2.0);
 		    for (j = 0; j < (2*n-1-i); j++) {
@@ -24,8 +24,8 @@ public class HexagonDrawing {
 				ImageButton imgBtn = new ImageButton(context);
 				imgBtn.setBackgroundColor(Color.TRANSPARENT);
 				imgBtn.setImageResource(R.drawable.emptyh);
-				shareParams.leftMargin = Math.abs((int) x)+100+j*30;
-				shareParams.topMargin = Math.abs((int) y)+50+j*50;
+				shareParams.leftMargin = Math.abs((int) (x+220));
+				shareParams.topMargin = Math.abs((int) (y+90));
 				imgBtn.setLayoutParams(shareParams);
 				imgBtn.setScaleType(ScaleType.FIT_XY);
 				
@@ -36,12 +36,12 @@ public class HexagonDrawing {
 					ImageButton imgBtn1 = new ImageButton(context);
 					imgBtn1.setBackgroundColor(Color.TRANSPARENT);
 					imgBtn1.setImageResource(R.drawable.emptyh);
-					shareParams1.leftMargin = Math.abs((int) x)+165+j*55;
-					shareParams1.topMargin = Math.abs((int) y)+50+j*100;
+					shareParams1.leftMargin = Math.abs((int) (x+220-(d*(i))));
+					shareParams1.topMargin = Math.abs((int) (y+90-(d*(i))));
 					imgBtn1.setLayoutParams(shareParams1);
 					imgBtn1.setScaleType(ScaleType.FIT_XY);
 					
-					layout.addView(imgBtn1);
+					//layout.addView(imgBtn1);
 		        	
 		        }
 		    }
