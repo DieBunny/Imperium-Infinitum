@@ -1,5 +1,6 @@
 package nich.Package;
 
+import nich.Classes.Player;
 import android.R.color;
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,10 +24,13 @@ import android.widget.TextView;
 
 public class StartPage extends Activity {
 
+	ImpInfGlobal iiglobal;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_page);
+		iiglobal = ImpInfGlobal.getInstance();
 	}
 
 	@Override
@@ -38,6 +42,7 @@ public class StartPage extends Activity {
 	
 	public void NavigateToMain(View v)
 	{
+		//finds out which radiobutton was pressed and gets related playercount
 		RadioGroup rg = (RadioGroup) findViewById(R.id.radioGroup1);
 		int rbId = rg.getCheckedRadioButtonId();
 		 View radioButton = rg.findViewById(rbId);
@@ -49,21 +54,21 @@ public class StartPage extends Activity {
 		    
 		final Button button = (Button) findViewById(R.id.StartBtnId);
 		
+		//dynamically building dialog window, so user can enter player names
 		Builder dialog = new AlertDialog.Builder(this);
 		dialog.setTitle("Set player names");
-		LinearLayout layout = new LinearLayout(this);
+		final LinearLayout layout = new LinearLayout(this);
 		layout.setOrientation(LinearLayout.VERTICAL);
 		
 		for (int i=0; i<playerCount; i++)
 		{
 		TextView label = new TextView(layout.getContext());
-		//label.setLayoutParams(new LayoutParams(100, LayoutParams.MATCH_PARENT));
 		label.setText(i+1 + ". Player:");
 		InputFilter[] filters = new InputFilter[1];
 		filters[0] = new InputFilter.LengthFilter(12);
 		EditText textfield = new EditText(layout.getContext());
-		//textfield.setLayoutParams(new LayoutParams(100, LayoutParams.MATCH_PARENT));
 		textfield.setFilters(filters);
+		textfield.setTag(i+1 + ". Player");
 		layout.addView(label);
 		layout.addView(textfield);
 		}
@@ -71,6 +76,14 @@ public class StartPage extends Activity {
 		dialog.setView(layout).setPositiveButton("GO", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				for (int i=0; i<playerCount; i++)
+				{
+					Player player = new Player();
+					EditText playerName = (EditText) layout.findViewWithTag(i+1 + ". Player");
+					player.name = playerName.getText().toString();
+					iiglobal.playerList.add(player);
+				}
+				
 				Intent intent = new Intent(button.getContext(), MainPage.class);
 				intent.putExtra("PlayerCount", playerCount);
 				startActivity(intent);
