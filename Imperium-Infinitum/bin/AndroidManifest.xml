@@ -11,7 +11,7 @@
     <application
         android:name="nich.Package.ImpInfGlobal"
         android:allowBackup="true"
-        android:icon="@drawable/elders"
+        android:icon="@drawable/ic_launcher_elder"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
