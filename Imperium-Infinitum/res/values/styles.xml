@@ -17,5 +17,9 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
     <color name="White">#FFFFFF</color>
+    <color name="ComvellDarkBlue">#14131F</color>
+    <color name="Yellow">#FAE41F</color>
+    <color name="ElementGray">#3B3535</color>
+    <color name="ChillyBlueBlue">#0C0B24</color>
 
 </resources>

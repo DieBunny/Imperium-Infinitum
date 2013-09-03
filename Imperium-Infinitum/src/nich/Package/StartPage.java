@@ -10,6 +10,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.InputFilter;
 import android.view.Menu;
 import android.view.View;
@@ -56,17 +57,22 @@ public class StartPage extends Activity {
 		
 		//dynamically building dialog window, so user can enter player names
 		Builder dialog = new AlertDialog.Builder(this);
-		dialog.setTitle("Set player names");
+		//dialog.setTitle("Set player names");
 		final LinearLayout layout = new LinearLayout(this);
+		layout.setBackgroundColor(getResources().getColor(R.color.ElementGray));
 		layout.setOrientation(LinearLayout.VERTICAL);
 		
 		for (int i=0; i<playerCount; i++)
 		{
 		TextView label = new TextView(layout.getContext());
+		label.setTextColor(getResources().getColor(R.color.Yellow));
+		label.setTypeface(null, Typeface.BOLD);
 		label.setText(i+1 + ". Player:");
 		InputFilter[] filters = new InputFilter[1];
 		filters[0] = new InputFilter.LengthFilter(12);
 		EditText textfield = new EditText(layout.getContext());
+		textfield.setTextColor(getResources().getColor(R.color.Yellow));
+		textfield.setTypeface(null, Typeface.BOLD_ITALIC);
 		textfield.setFilters(filters);
 		textfield.setTag(i+1 + ". Player");
 		layout.addView(label);
