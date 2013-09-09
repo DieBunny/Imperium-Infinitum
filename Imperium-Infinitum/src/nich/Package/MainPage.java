@@ -3,6 +3,7 @@ package nich.Package;
 import nich.Classes.HexagonDrawing;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.util.DisplayMetrics;
 import android.view.Menu;
@@ -23,6 +24,7 @@ public class MainPage extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_page);
 		iiglobal = ImpInfGlobal.getInstance();
+		XmlResourceParser xpp = this.getResources().getXml(R.xml.impinf);
 		
 		//gets playerCount from previous activity
 		Bundle extras = getIntent().getExtras();
@@ -32,10 +34,13 @@ public class MainPage extends Activity {
 		
 		//generates hexgrid
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainlayout);
+
 		DisplayMetrics dispMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dispMetrics);
 		HexagonDrawing hexDraw = new HexagonDrawing();
 		hexDraw.DrawHex(layout, this, playerCount, dispMetrics.heightPixels, dispMetrics.widthPixels);
+		
+		hexDraw.GetXmlPlanets(playerCount, xpp);
 		
 		//Displays player names on screen
 		for (int i=0; i<playerCount; i++)

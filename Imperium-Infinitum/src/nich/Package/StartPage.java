@@ -1,5 +1,12 @@
 package nich.Package;
 
+import java.io.IOException;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import nich.Classes.CombatPhases;
+import nich.Classes.Planet;
 import nich.Classes.Player;
 import android.R.color;
 import android.os.Bundle;
@@ -9,6 +16,8 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.InputFilter;
@@ -32,6 +41,7 @@ public class StartPage extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start_page);
 		iiglobal = ImpInfGlobal.getInstance();
+		
 	}
 
 	@Override

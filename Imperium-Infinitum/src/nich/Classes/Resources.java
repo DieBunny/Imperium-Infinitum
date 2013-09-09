@@ -1,11 +1,11 @@
 package nich.Classes;
 
 public class Resources {
-	int Fuel;
-	int Research;
-	int BattleShip;
-	int Destroyer;
-	int Frigate;
+	public int Fuel;
+	public int Research;
+	public int BattleShip;
+	public int Destroyer;
+	public int Frigate;
 
 	
 	
