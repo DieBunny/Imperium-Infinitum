@@ -22,6 +22,7 @@ import android.widget.TextView;
 public class HexagonDrawing {
 	
 	public List<List<Planet>> planetList = new ArrayList<List<Planet>>();
+	public List<List<Planet>> rhombList = new ArrayList<List<Planet>>();
 	
 	public void DrawHex (RelativeLayout layout, Context context, int n, int displayHeight, int displayWidth)
 	{
@@ -78,11 +79,19 @@ public class HexagonDrawing {
 		String tempName = new String();
 		Random rand = new Random();
 		List<Integer> randInt = new ArrayList<Integer>();
+		List<Integer> randIntRhombus = new ArrayList<Integer>();
 		
 		for(int j =0; j < playerCount; j++)
 		{
 			int r = rand.nextInt(7);
+			int rr = rand.nextInt(6);
+			while (randInt.contains(r))
+			{r = rand.nextInt(7);}
+			while (randIntRhombus.contains(rr))
+			{rr = rand.nextInt(6);}
+			
 			randInt.add(r);
+			randIntRhombus.add(rr);
 		}
 		
 			try {
@@ -103,6 +112,7 @@ public class HexagonDrawing {
 			}
 
 			int i =0;
+			int r=0;
 		   while (eventType != XmlPullParser.END_DOCUMENT)
 		   {
 			   
@@ -506,6 +516,407 @@ public class HexagonDrawing {
 				   planetList.add(tempList);
 
 			   }i++;
+			   }
+			   //RHOMBUS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			   else if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("Rhombus"))
+			   {tempName = xpp.getName();
+				   if (randIntRhombus.contains(r))
+				   {
+				   
+				   List<Planet> tempList = new ArrayList<Planet>();
+				   while(eventType!=XmlPullParser.END_TAG )
+				   {tempName = xpp.getName();
+					   if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("Planet"))
+					   { Planet newPlanet = new Planet();
+						   while(eventType!=XmlPullParser.END_TAG)
+						   {tempName = xpp.getName();
+						   
+							
+							
+							   if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("xPos"))
+							   {
+								   try {
+									eventType = xpp.next();
+								} catch (XmlPullParserException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								   if (eventType==XmlPullParser.TEXT)
+								   {
+									   newPlanet.xPos = Integer.parseInt(xpp.getText());
+									   try {
+										eventType = xpp.next();
+									} catch (XmlPullParserException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								   }
+
+							   }
+							   else if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("YPos"))
+							   {
+								   try {
+										eventType = xpp.next();
+									} catch (XmlPullParserException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+									   if (eventType==XmlPullParser.TEXT)
+									   {
+										   newPlanet.yPos = Integer.parseInt(xpp.getText());
+										   try {
+											eventType = xpp.next();
+										} catch (XmlPullParserException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										} catch (IOException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									   }
+							   }
+							   else if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("CombatPhases"))
+							   {
+								   while(eventType!=XmlPullParser.END_TAG)
+								   {tempName = xpp.getName();
+									   if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("LongRange"))
+									   {newPlanet.combatPhases = new CombatPhases(0,0,0,0);
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.combatPhases.longRange=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("MediumRange"))
+									   {
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.combatPhases.mediumRange=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("ShortRange"))
+									   {
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.combatPhases.shortRange=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("LastStand"))
+									   {
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.combatPhases.lastStand=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   
+									   try {
+										   tempName = xpp.getName();
+										eventType = xpp.next();
+										tempName = xpp.getName();
+									} catch (XmlPullParserException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								   }
+							   }
+							   
+							   else if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("Resources"))
+							   {
+								   while(eventType!=XmlPullParser.END_TAG)
+								   {tempName = xpp.getName();
+									   if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("Fuel"))
+									   {newPlanet.planetRes = new nich.Classes.Resources(0, 0, 0, 0, 0);
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.planetRes.Fuel=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("Research"))
+									   {
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.planetRes.Research=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("BattleShip"))
+									   {
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.planetRes.BattleShip=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("Destroyer"))
+									   {
+										   try {
+												eventType = xpp.next();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.planetRes.Destroyer=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   else if(eventType==XmlPullParser.START_TAG && xpp.getName().equals("Frigate"))
+									   {
+										   try {
+											   tempName = xpp.getName();
+												eventType = xpp.next();
+												tempName = xpp.getName();
+											} catch (XmlPullParserException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											} catch (IOException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											   if (eventType==XmlPullParser.TEXT)
+											   {
+												   newPlanet.planetRes.Frigate=Integer.parseInt(xpp.getText());
+												   try {
+													eventType = xpp.next();
+												} catch (XmlPullParserException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												} catch (IOException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
+											   }
+									   }
+									   try {
+										   tempName = xpp.getName();
+										eventType = xpp.next();
+										tempName = xpp.getName();
+									} catch (XmlPullParserException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								   }
+							   }
+							   else if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("PlanetType"))
+							   {		   try {
+									eventType = xpp.next();
+								} catch (XmlPullParserException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								   if (eventType==XmlPullParser.TEXT)
+								   {
+									   newPlanet.planetType=xpp.getText();
+									   try {
+										eventType = xpp.next();
+										tempName = xpp.getName();
+
+										
+										   
+										   
+									} catch (XmlPullParserException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IOException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								   }
+							   }
+							   try {
+								   eventType = xpp.next();
+							} catch (XmlPullParserException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							   
+						   }
+						   if(eventType==XmlPullParser.END_TAG && xpp.getName().equals("Planet"))
+							{tempList.add(newPlanet);
+							try {
+								eventType = xpp.next();
+							} catch (XmlPullParserException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							tempName = xpp.getName();}
+						   
+					   }
+					   else
+					   {try {
+						   tempName = xpp.getName();
+						eventType = xpp.next();
+						tempName = xpp.getName();
+					} catch (XmlPullParserException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}}
+				   }
+				   rhombList.add(tempList);
+
+			   }r++;
 			   }
 		   
 			   
