@@ -37,6 +37,11 @@ public class MainPage extends Activity {
 
 		DisplayMetrics dispMetrics = new DisplayMetrics();
 		getWindowManager().getDefaultDisplay().getMetrics(dispMetrics);
+		int relW = layout.getWidth();
+		int relH = layout.getHeight();
+		int dispW = dispMetrics.widthPixels;
+		int dispH = dispMetrics.heightPixels;
+		
 		HexagonDrawing hexDraw = new HexagonDrawing();
 		hexDraw.DrawHex(layout, this, playerCount, dispMetrics.heightPixels, dispMetrics.widthPixels);
 		

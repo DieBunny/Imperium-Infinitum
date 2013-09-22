@@ -26,31 +26,49 @@ public class HexagonDrawing {
 	
 	public void DrawHex (RelativeLayout layout, Context context, int n, int displayHeight, int displayWidth)
 	{
-		n=n+5;
+		int z = 0;
+		switch (n)
+		{
+		   case 2:
+		        z=9; 
+		      break;
+		   case 3:
+		        z=12;
+		      break;
+		   case 4:
+		         z=15;
+		      break;
+		   default:
+		      break;
+		}
+		
+		
+		n=12;
 		//hex size depends on screen size and player count
-		int oneHex = (displayHeight-(displayHeight/5))/(n);
+		//int oneHex = (displayHeight-(displayHeight/5))/(n);
+		int oneHex = 78;
 		int i, j;
 		float y,x;
 		//d should be changed. not precise for now
-		float d=(float) (oneHex / 2* Math.sqrt(3)-(oneHex/6));// d is the distance between 2 points 
+		float d=(float) (oneHex / 2* Math.sqrt(3)-(oneHex/5.5));// d is the distance between 2 points 
 		for(i=0; i<=(n-1); i++) {
 		    y = (float) ((Math.sqrt(3)*i*d)/2.0);
-		    for (j = 0; j < (2*n-1-i); j++) {
+		    for (j = 0; j < (2*z-1-i); j++) {
 		        x = (float) ((-(2*n-i-2)*d)/2.0 + j*d);
 		        RelativeLayout.LayoutParams shareParams = new RelativeLayout.LayoutParams(oneHex, oneHex);
 				ImageButton imgBtn = new ImageButton(context);
 				imgBtn.setBackgroundColor(Color.TRANSPARENT);
 				imgBtn.setImageResource(R.drawable.hexwt);
-				shareParams.leftMargin = Math.abs((int) (x+displayWidth/2));
-				shareParams.topMargin = Math.abs((int) (y+displayHeight/3));
+				shareParams.leftMargin = Math.abs((int) (x+oneHex*12));
+				shareParams.topMargin = Math.abs((int) (y+oneHex*8));
 				imgBtn.setLayoutParams(shareParams);
 				imgBtn.setScaleType(ScaleType.FIT_XY);
 				//tags - I doubt we will use them
 				//just place where to write down array element`s [i][j]
-				Planet xxx = new Planet();
-				xxx.xPos = i;
-				xxx.yPos = j;
-				imgBtn.setTag(xxx);
+				//Planet xxx = new Planet();
+				//xxx.xPos = i;
+				//xxx.yPos = j;
+				//imgBtn.setTag(xxx);
 				layout.addView(imgBtn);
 		        
 		        if (y!=0) {
@@ -58,15 +76,15 @@ public class HexagonDrawing {
 					ImageButton imgBtn1 = new ImageButton(context);
 					imgBtn1.setBackgroundColor(Color.TRANSPARENT);
 					imgBtn1.setImageResource(R.drawable.hexwt);
-					shareParams1.leftMargin = Math.abs((int) (x+displayWidth/2));
-					shareParams1.topMargin = Math.abs((int) (-y+displayHeight/3));
+					shareParams1.leftMargin = Math.abs((int) (x+oneHex*12));
+					shareParams1.topMargin = Math.abs((int) (-y+oneHex*8));
 					imgBtn1.setLayoutParams(shareParams1);
 					imgBtn1.setScaleType(ScaleType.FIT_XY);
 					//just place where to write down array element`s [i][j]
-					Planet xyx = new Planet();
-					xyx.xPos = -i;
-					xyx.yPos = j+i;
-					imgBtn1.setTag(xyx);
+					//Planet xyx = new Planet();
+					//xyx.xPos = -i;
+					//xyx.yPos = j+i;
+					//imgBtn1.setTag(xyx);
 					layout.addView(imgBtn1);
 		        }
 		    }
@@ -933,14 +951,29 @@ public class HexagonDrawing {
 			}
 			   
 		   }
+		   RandomRotation();
 	}
 
 	public List<List<Planet>> RandomRotation()
 	{
+		//0	 		X	Y
+		//60		X+Y	-X 
+		
 		List<List<Planet>> rotatedPlanets = new ArrayList<List<Planet>>();
 		for (int i=0; i<planetList.size(); i++)
 		{
-			//somehow check if exists by key and add
+			Random random = new Random();
+			int rand = random.nextInt(6);
+			for (int j =0; j<rand; j++)
+			{
+				for (int p =0; p<planetList.get(i).size();p++)
+				{
+					int xxx = planetList.get(i).get(p).xPos;
+					int yyy = planetList.get(i).get(p).yPos;
+					planetList.get(i).get(p).xPos = xxx+yyy;
+					planetList.get(i).get(p).yPos = -xxx;
+				}
+			}
 			rotatedPlanets.add(planetList.get(i));
 		}
 		return rotatedPlanets;
@@ -951,7 +984,6 @@ public class HexagonDrawing {
 		List<Planet> finalPlanets = new ArrayList<Planet>();
 		for (int i=0; i<planetList.size(); i++)
 		{
-			//somehow check if exists by key and add
 			finalPlanets.addAll(planetList.get(i));
 		}
 		return finalPlanets;
