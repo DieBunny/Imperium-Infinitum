@@ -2,6 +2,7 @@ package nich.Classes;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -21,11 +22,15 @@ import android.widget.TextView;
 
 public class HexagonDrawing {
 	
-	public List<List<Planet>> planetList = new ArrayList<List<Planet>>();
-	public List<List<Planet>> rhombList = new ArrayList<List<Planet>>();
+	private List<List<Planet>> planetList = new ArrayList<List<Planet>>();
+	private List<List<Planet>> rhombList = new ArrayList<List<Planet>>();
+	private int[][] centersFor2 = {{-6,11}, {6,5}, {0,2}, {0,14}};
+	private int[][] centersFor3 = {{-6,11}, {6,5}, {0,17}, {0,2}, {-9,11}, {9,20}};
+	private int[][] centersFor4 = {{0,5}, {-6,17}, {6,11}, {0,23}, {-9,2}, {9,2}, {-9,26}, {9,17}};
 	
-	public void DrawHex (RelativeLayout layout, Context context, int n, int displayHeight, int displayWidth)
+	public void DrawHex (RelativeLayout layout, Context context, int n, List<Planet> lastPlanetList)
 	{
+		
 		int z = 0;
 		switch (n)
 		{
@@ -44,7 +49,6 @@ public class HexagonDrawing {
 		
 		
 		n=12;
-		//hex size depends on screen size and player count
 		//int oneHex = (displayHeight-(displayHeight/5))/(n);
 		int oneHex = 78;
 		int i, j;
@@ -63,6 +67,15 @@ public class HexagonDrawing {
 				shareParams.topMargin = Math.abs((int) (y+oneHex*8));
 				imgBtn.setLayoutParams(shareParams);
 				imgBtn.setScaleType(ScaleType.FIT_XY);
+				for(Planet planet : lastPlanetList)
+				{
+					if (planet.yPos==i && planet.xPos==j)
+					{
+						imgBtn.setBackgroundResource(R.drawable.hextrans);
+						imgBtn.setTag(planet);
+						break;
+					}
+				}
 				//tags - I doubt we will use them
 				//just place where to write down array element`s [i][j]
 				//Planet xxx = new Planet();
@@ -80,6 +93,15 @@ public class HexagonDrawing {
 					shareParams1.topMargin = Math.abs((int) (-y+oneHex*8));
 					imgBtn1.setLayoutParams(shareParams1);
 					imgBtn1.setScaleType(ScaleType.FIT_XY);
+					for(Planet planet : lastPlanetList)
+					{
+						if (planet.yPos==-i && planet.xPos==j+i)
+						{
+							imgBtn1.setBackgroundResource(R.drawable.hextrans);
+							imgBtn1.setTag(planet);
+							break;
+						}
+					}
 					//just place where to write down array element`s [i][j]
 					//Planet xyx = new Planet();
 					//xyx.xPos = -i;
@@ -954,6 +976,7 @@ public class HexagonDrawing {
 		   RandomRotation();
 	}
 
+	//this should be void, and change planetList (not return new array)
 	public List<List<Planet>> RandomRotation()
 	{
 		//0	 		X	Y
@@ -979,13 +1002,39 @@ public class HexagonDrawing {
 		return rotatedPlanets;
 	}
 	
-	public List<Planet> ConvertCoordinates()
+	public List<Planet> ConvertCoordinates(int playerCount)
 	{
+		Collections.shuffle(planetList);
+		Collections.shuffle(rhombList);
+		
+		int[][] centers = new int[8][8];
+		switch (playerCount)
+		{
+		   case 2:
+			   centers = centersFor2;
+		      break;
+		   case 3:
+		        centers = centersFor3;
+		      break;
+		   case 4:
+		         centers = centersFor4;
+		      break;
+		   default:
+		      break;
+		}
 		List<Planet> finalPlanets = new ArrayList<Planet>();
+		
 		for (int i=0; i<planetList.size(); i++)
 		{
-			finalPlanets.addAll(planetList.get(i));
+				for (int p =0; p<planetList.get(i).size();p++)
+				{
+					planetList.get(i).get(p).xPos = (centers[i][1])+planetList.get(i).get(p).xPos;
+					planetList.get(i).get(p).yPos = (centers[i][0])+planetList.get(i).get(p).yPos;
+					finalPlanets.add(planetList.get(i).get(p));
+				}
 		}
+		
+
 		return finalPlanets;
 	}
 	
