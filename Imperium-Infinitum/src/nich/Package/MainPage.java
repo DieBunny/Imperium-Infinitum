@@ -73,5 +73,12 @@ public class MainPage extends Activity {
 		getMenuInflater().inflate(R.menu.main_page, menu);
 		return true;
 	}
+	
+	@Override
+	public void onBackPressed() {
+	iiglobal.planetList.clear();
+	iiglobal.fleetList.clear();
+	this.finish();
+	}
 
 }
