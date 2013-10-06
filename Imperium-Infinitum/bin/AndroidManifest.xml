@@ -27,6 +27,14 @@
             android:name="nich.Package.MainPage"
             android:label="@string/title_activity_main_page" >
         </activity>
+        <activity
+            android:name="nich.Package.ShipArranging"
+            android:label="@string/title_activity_ship_arranging"
+            android:parentActivityName="nich.Package.MainPage" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nich.Package.MainPage" />
+        </activity>
     </application>
 
 </manifest>

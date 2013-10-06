@@ -28,6 +28,7 @@ public class MainPage extends Activity {
 		XmlResourceParser xpp = this.getResources().getXml(R.xml.impinf);
 		
 		//gets playerCount from previous activity
+		//or from iiglobal playerList size
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 		  playerCount = extras.getInt("PlayerCount");

@@ -97,6 +97,8 @@ public class StartPage extends Activity {
 					Player player = new Player();
 					EditText playerName = (EditText) layout.findViewWithTag(i+1 + ". Player");
 					player.name = playerName.getText().toString();
+					player.resources=new nich.Classes.Resources(0, 0, 4, 4, 4);
+					player.victoryPoints = 2;
 					iiglobal.playerList.add(player);
 				}
 				

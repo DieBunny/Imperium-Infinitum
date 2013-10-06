@@ -25,8 +25,8 @@ public class HexagonDrawing {
 	private List<List<Planet>> planetList = new ArrayList<List<Planet>>();
 	private List<List<Planet>> rhombList = new ArrayList<List<Planet>>();
 	private int[][] centersFor2 = {{-6,11}, {6,5}, {0,2}, {0,14}};
-	private int[][] centersFor3 = {{-6,11}, {6,5}, {0,17}, {0,2}, {-9,11}, {9,20}};
-	private int[][] centersFor4 = {{0,5}, {-6,17}, {6,11}, {0,23}, {-9,2}, {9,2}, {-9,26}, {9,17}};
+	private int[][] centersFor3 = {{-6,11}, {6,5}, {0,17}, {-2,3}, {2,1}, {-10,19},{-8,21}, {10,9}, {8,13}};
+	private int[][] centersFor4 = {{0,5}, {-6,17}, {6,11}, {0,23}, {-8,9}, {-10,13}, {8,1}, {10,3},{-10,25}, {-8,27}, {10,15}, {8,19}};
 	
 	public void DrawHex (RelativeLayout layout, Context context, int n, List<Planet> lastPlanetList)
 	{
@@ -71,7 +71,12 @@ public class HexagonDrawing {
 				{
 					if (planet.yPos==i && planet.xPos==j)
 					{
-						imgBtn.setBackgroundResource(R.drawable.hextrans);
+						if (planet.planetType.equals("Oceanic"))
+						{imgBtn.setBackgroundResource(R.drawable.octest);}
+						else if (planet.planetType.equals("Volcanic"))
+						{imgBtn.setBackgroundResource(R.drawable.volctest);}
+						else if (planet.planetType.equals("Desert"))
+						{imgBtn.setBackgroundResource(R.drawable.destest);}
 						imgBtn.setTag(planet);
 						break;
 					}
@@ -97,7 +102,12 @@ public class HexagonDrawing {
 					{
 						if (planet.yPos==-i && planet.xPos==j+i)
 						{
-							imgBtn1.setBackgroundResource(R.drawable.hextrans);
+							if (planet.planetType.equals("Oceanic"))
+							{imgBtn1.setBackgroundResource(R.drawable.octest);}
+							else if (planet.planetType.equals("Volcanic"))
+							{imgBtn1.setBackgroundResource(R.drawable.volctest);}
+							else if (planet.planetType.equals("Desert"))
+							{imgBtn1.setBackgroundResource(R.drawable.destest);}
 							imgBtn1.setTag(planet);
 							break;
 						}
@@ -1007,7 +1017,7 @@ public class HexagonDrawing {
 		Collections.shuffle(planetList);
 		Collections.shuffle(rhombList);
 		
-		int[][] centers = new int[8][8];
+		int[][] centers = new int[12][2];
 		switch (playerCount)
 		{
 		   case 2:
@@ -1033,6 +1043,27 @@ public class HexagonDrawing {
 					finalPlanets.add(planetList.get(i).get(p));
 				}
 		}
+		
+		int currentPos = playerCount;
+		for (int i=0; i<rhombList.size(); i++)
+		{
+				for (int p =0; p<rhombList.get(i).size();p++)
+				{
+					if (playerCount==2)
+					{
+					rhombList.get(i).get(p).xPos = (centers[i+rhombList.size()][1])+rhombList.get(i).get(p).xPos;
+					rhombList.get(i).get(p).yPos = (centers[i+rhombList.size()][0])+rhombList.get(i).get(p).yPos;
+					}
+					else
+					{
+						rhombList.get(i).get(p).xPos = centers[currentPos][1];
+						rhombList.get(i).get(p).yPos = centers[currentPos][0];
+						currentPos++;
+					}
+					finalPlanets.add(rhombList.get(i).get(p));
+				}
+		}
+		
 		
 
 		return finalPlanets;
