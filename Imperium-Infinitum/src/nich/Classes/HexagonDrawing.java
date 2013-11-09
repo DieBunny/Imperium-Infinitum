@@ -78,6 +78,7 @@ public class HexagonDrawing {
 						else if (planet.planetType.equals("Desert"))
 						{imgBtn.setBackgroundResource(R.drawable.destest);}
 						imgBtn.setTag(planet);
+						imgBtn.setOnClickListener(new PlanetClickListener());
 						break;
 					}
 				}
@@ -109,6 +110,7 @@ public class HexagonDrawing {
 							else if (planet.planetType.equals("Desert"))
 							{imgBtn1.setBackgroundResource(R.drawable.destest);}
 							imgBtn1.setTag(planet);
+							imgBtn1.setOnClickListener(new PlanetClickListener());
 							break;
 						}
 					}
@@ -177,6 +179,8 @@ public class HexagonDrawing {
 				   {tempName = xpp.getName();
 					   if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("Planet"))
 					   { Planet newPlanet = new Planet();
+					   newPlanet.homePlanet=false;
+				   		newPlanet.blockaded=false;
 						   while(eventType!=XmlPullParser.END_TAG)
 						   {tempName = xpp.getName();
 						   
@@ -578,6 +582,8 @@ public class HexagonDrawing {
 				   {tempName = xpp.getName();
 					   if (eventType==XmlPullParser.START_TAG && xpp.getName().equals("Planet"))
 					   { Planet newPlanet = new Planet();
+					   		newPlanet.homePlanet=true;
+					   		newPlanet.blockaded=false;
 						   while(eventType!=XmlPullParser.END_TAG)
 						   {tempName = xpp.getName();
 						   

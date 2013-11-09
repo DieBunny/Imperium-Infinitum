@@ -65,4 +65,19 @@
         android:textSize="25dp"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/StartBtnId"
+        android:layout_alignRight="@+id/StartBtnId"
+        android:layout_below="@+id/StartBtnId"
+        android:layout_marginTop="30dp"
+        android:background="@color/Yellow"
+        android:onClick="GoToRules"
+        android:text="Rules"
+        android:textColor="@color/ChillyBlueBlue"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>

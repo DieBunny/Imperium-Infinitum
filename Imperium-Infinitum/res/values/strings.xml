@@ -6,5 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_main_page">MainPage</string>
     <string name="title_activity_ship_arranging">ShipArranging</string>
+    <string name="title_activity_ship_arranging_relative">ShipArrangingRelative</string>
+    <string name="title_activity_rules_page">RulesPage</string>
 
 </resources>

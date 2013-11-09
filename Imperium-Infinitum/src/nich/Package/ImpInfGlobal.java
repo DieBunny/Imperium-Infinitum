@@ -29,4 +29,9 @@ public class ImpInfGlobal extends Application {
 	 public List<Planet> planetList = new ArrayList<Planet>();
 	 public List<Fleet> fleetList = new ArrayList<Fleet>();
 	 
+	 public int turn = 0;
+	 public Player currentPlayer;
+	 public Planet currentPlanet1;
+	 public Planet currentPlanet2;
+	 boolean galaxyGenerated = false;
 }

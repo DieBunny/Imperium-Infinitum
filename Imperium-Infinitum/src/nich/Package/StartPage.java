@@ -98,12 +98,11 @@ public class StartPage extends Activity {
 					EditText playerName = (EditText) layout.findViewWithTag(i+1 + ". Player");
 					player.name = playerName.getText().toString();
 					player.resources=new nich.Classes.Resources(0, 0, 4, 4, 4);
-					player.victoryPoints = 2;
+					player.victoryPoints = 0;
 					iiglobal.playerList.add(player);
 				}
 				
 				Intent intent = new Intent(button.getContext(), MainPage.class);
-				intent.putExtra("PlayerCount", playerCount);
 				startActivity(intent);
 				
 			}
@@ -119,4 +118,9 @@ public class StartPage extends Activity {
 		
 	}
 
+	public void GoToRules(View v)
+	{
+		Intent intent = new Intent(v.getContext(), RulesPage.class);
+		startActivity(intent);
+	}
 }

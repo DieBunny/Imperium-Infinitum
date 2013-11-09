@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <application
@@ -25,15 +25,17 @@
         </activity>
         <activity
             android:name="nich.Package.MainPage"
-            android:label="@string/title_activity_main_page" >
+            android:label="@string/title_activity_main_page" 
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            >
         </activity>
         <activity
-            android:name="nich.Package.ShipArranging"
-            android:label="@string/title_activity_ship_arranging"
-            android:parentActivityName="nich.Package.MainPage" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="nich.Package.MainPage" />
+            android:name="nich.Package.ShipArrangingRelative"
+            android:label="@string/title_activity_ship_arranging_relative" >
+        </activity>
+        <activity
+            android:name="nich.Package.RulesPage"
+            android:label="@string/title_activity_rules_page" >
         </activity>
     </application>
 

@@ -24,7 +24,7 @@
         android:id="@+id/planet2"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/rulestext"
         android:layout_marginLeft="138dp"
         android:layout_marginTop="84dp"
         android:background="@null"
@@ -44,13 +44,34 @@
         android:src="@drawable/hextrans" />
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/rulestext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@layout/activity_main_page"
         android:layout_toLeftOf="@+id/planet1"
         android:text="MAP and all other stuff HERE"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/arrangeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/rulestext"
+        android:layout_marginLeft="320dp"
+        android:layout_toRightOf="@+id/planet1"
+        android:onClick="GoToArrangeShipsPage"
+        android:text="Arrange Ships"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/arrangeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/arrangeButton"
+        android:layout_toRightOf="@+id/planet1"
+        android:text="Choose home planet"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:visibility="invisible" />
 
 </RelativeLayout>
 </HorizontalScrollView>
