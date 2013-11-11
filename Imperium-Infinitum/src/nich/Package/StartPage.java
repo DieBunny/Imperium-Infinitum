@@ -6,8 +6,10 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import nich.Classes.CombatPhases;
+import nich.Classes.Fuel;
 import nich.Classes.Planet;
 import nich.Classes.Player;
+import nich.Classes.Research;
 import android.R.color;
 import android.os.Bundle;
 import android.app.Activity;
@@ -97,7 +99,6 @@ public class StartPage extends Activity {
 					Player player = new Player();
 					EditText playerName = (EditText) layout.findViewWithTag(i+1 + ". Player");
 					player.name = playerName.getText().toString();
-					player.resources=new nich.Classes.Resources(0, 0, 4, 4, 4);
 					player.victoryPoints = 0;
 					iiglobal.playerList.add(player);
 				}

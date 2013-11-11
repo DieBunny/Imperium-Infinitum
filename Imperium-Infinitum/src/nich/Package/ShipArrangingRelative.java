@@ -98,13 +98,13 @@ public class ShipArrangingRelative extends Activity {
 			findViewById(R.id.rightPlanetLayout).setTag(planet2);
 			if(planet1.planetType.equals("Oceanic"))
 			{
-			findViewById(R.id.leftplanet).setBackgroundResource(drawable.octest);
-			findViewById(R.id.rightplanet).setBackgroundResource(drawable.volctest);
+			findViewById(R.id.leftplanet).setBackgroundResource(drawable.mediumoceanic);
+			findViewById(R.id.rightplanet).setBackgroundResource(drawable.mediumvolcanic);
 			}
 			if(planet1.planetType.equals("Volcanic"))
 			{
-			findViewById(R.id.leftplanet).setBackgroundResource(drawable.volctest);
-			findViewById(R.id.rightplanet).setBackgroundResource(drawable.octest);
+			findViewById(R.id.leftplanet).setBackgroundResource(drawable.mediumvolcanic);
+			findViewById(R.id.rightplanet).setBackgroundResource(drawable.mediumoceanic);
 			}
 		}
 		else if (planet2.xPos < planet1.xPos)
@@ -113,13 +113,13 @@ public class ShipArrangingRelative extends Activity {
 			findViewById(R.id.rightPlanetLayout).setTag(planet1);
 			if(planet2.planetType.equals("Oceanic"))
 			{
-			findViewById(R.id.leftplanet).setBackgroundResource(drawable.octest);
-			findViewById(R.id.rightplanet).setBackgroundResource(drawable.volctest);
+			findViewById(R.id.leftplanet).setBackgroundResource(drawable.mediumoceanic);
+			findViewById(R.id.rightplanet).setBackgroundResource(drawable.mediumvolcanic);
 			}
 			if(planet2.planetType.equals("Volcanic"))
 			{
-			findViewById(R.id.leftplanet).setBackgroundResource(drawable.volctest);
-			findViewById(R.id.rightplanet).setBackgroundResource(drawable.octest);
+			findViewById(R.id.leftplanet).setBackgroundResource(drawable.mediumvolcanic);
+			findViewById(R.id.rightplanet).setBackgroundResource(drawable.mediumoceanic);
 			}
 		}
 	}
@@ -204,7 +204,6 @@ public class ShipArrangingRelative extends Activity {
 		//Intent intent = new Intent(ShipArrangingRelative.this, MainPage.class);
 		Intent intent = new Intent(v.getContext(), MainPage.class);
 		startActivity(intent);
-			
 			//this.finish();
 	}
 	

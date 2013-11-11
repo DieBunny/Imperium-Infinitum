@@ -1,7 +1,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollviewmain"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" >
+
     <HorizontalScrollView android:id="@+id/HorizontalScrollView01" 
                       android:layout_width="wrap_content" 
                       android:layout_height="wrap_content">
@@ -20,47 +22,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainPage" >
 
-    <ImageButton
-        android:id="@+id/planet2"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_below="@+id/rulestext"
-        android:layout_marginLeft="138dp"
-        android:layout_marginTop="84dp"
-        android:background="@null"
-        android:scaleType="fitXY"
-        android:src="@drawable/hextrans" />
-
-    <ImageButton
-        android:id="@+id/planet1"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignLeft="@+id/planet2"
-        android:layout_alignTop="@+id/planet2"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="39dp"
-        android:background="@null"
-        android:scaleType="fitXY"
-        android:src="@drawable/hextrans" />
-
-    <TextView
-        android:id="@+id/rulestext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@layout/activity_main_page"
-        android:layout_toLeftOf="@+id/planet1"
-        android:text="MAP and all other stuff HERE"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/arrangeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/rulestext"
+        android:layout_alignTop="@layout/activity_main_page"
         android:layout_marginLeft="320dp"
-        android:layout_toRightOf="@+id/planet1"
+        android:background="@color/ChillyBlueBlue"
         android:onClick="GoToArrangeShipsPage"
-        android:text="Arrange Ships"
+        android:text="  Arrange Ships  "
+        android:textColor="@color/White"
+        android:textColorHint="@color/White"
         android:visibility="invisible" />
 
     <TextView
@@ -68,11 +40,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/arrangeButton"
-        android:layout_toRightOf="@+id/planet1"
         android:text="Choose home planet"
         android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/White"
+        android:textColorHint="@color/White"
         android:visibility="invisible" />
 
 </RelativeLayout>
+
 </HorizontalScrollView>
 </ScrollView>

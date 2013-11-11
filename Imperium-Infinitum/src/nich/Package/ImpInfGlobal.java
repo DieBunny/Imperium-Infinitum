@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nich.Classes.Fleet;
+import nich.Classes.HexagonDrawing;
 import nich.Classes.Planet;
 import nich.Classes.Player;
 
 import android.app.Application;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 //This is our global class!!! We can access this everywhere in application,
 //from all activities
@@ -33,5 +36,7 @@ public class ImpInfGlobal extends Application {
 	 public Player currentPlayer;
 	 public Planet currentPlanet1;
 	 public Planet currentPlanet2;
-	 boolean galaxyGenerated = false;
+	 public boolean galaxyGenerated = false;
+	 public HexagonDrawing hexDraw = new HexagonDrawing();
+	 
 }

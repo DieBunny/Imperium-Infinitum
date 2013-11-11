@@ -1,7 +1,9 @@
 package nich.Classes;
 
+import java.util.List;
+
 public class Planet {
-public Resources planetRes;
+public List<Resources> planetRes;
 public CombatPhases combatPhases;
 public int xPos;
 public int yPos;
