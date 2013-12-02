@@ -154,7 +154,8 @@ public class ShipArrangingRelative extends Activity {
 			
 		}
 
-			Fleet newFleet = new Fleet();
+		if (battleshcount+destroyercount+friggcount!=0)	//creating new fleet only if there is at least one ship on fleet
+			{Fleet newFleet = new Fleet();
 			newFleet.battleships = battleshcount;
 			newFleet.destroyers = destroyercount;
 			newFleet.frigates = friggcount;
@@ -163,7 +164,7 @@ public class ShipArrangingRelative extends Activity {
 			iiglobal.fleetList.add(newFleet);
 			battleshcount = 0;
 			destroyercount =0;
-			friggcount =0;
+			friggcount =0;}
 			
 			for (int i =0; i< rightLayout.getChildCount(); i++)
 			{
@@ -186,14 +187,14 @@ public class ShipArrangingRelative extends Activity {
 				}
 				
 			}
-
-				Fleet newFleet1 = new Fleet();
+			if (battleshcount+destroyercount+friggcount!=0)
+			{Fleet newFleet1 = new Fleet();
 				newFleet1.battleships = battleshcount;
 				newFleet1.destroyers = destroyercount;
 				newFleet1.frigates = friggcount;
 				newFleet1.location = (Planet) rightLayout.getTag();
 				newFleet1.owner = iiglobal.currentPlayer;
-				iiglobal.fleetList.add(newFleet1);
+				iiglobal.fleetList.add(newFleet1);}
 
 				iiglobal.currentPlayer.victoryPoints = 2;
 			iiglobal.currentPlanet1.owner = iiglobal.currentPlayer;

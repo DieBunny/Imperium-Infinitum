@@ -14,7 +14,20 @@ public class RulesPage extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_rules_page);
 
-		String rulesText = "<h2>Who wins?</h2>"
+		String rulesText = "<h2>Sequence of play</h2>"
+		+"<p>The game is divided in turns. Each turn consists of the number of steps."
+		+"One step is resolved by all players, before the next step begins, starting from the player holding the initiative token."
+		+"The initiative token is passed to the player to the left at the end of turn, similar to the dealer's button in poker.</p>"
+		+"<h3><ul><li>First step</li></ul></h3>"
+		+"<p>Each player collects resources by announcing which resource each of the planet he controls will produce during this turn.</p>"
+		+"<h3><ul><li>Second step</li></ul></h3>"
+		+"<p>Each player may spend research points to buy a new technology card.</p>"
+		+"<h3><ul><li>Third step</li></ul></h3>"
+		+"<p>Each player may move ships, attack other players and or take control of planets.</p>"
+		+"<h3><ul><li>Fourth step</li></ul></h3>"
+		+"<p>Each player discards the remaining fuel. The initiative token is passed to the next player.</p>"
+		
+		+"<h2>Who wins?</h2>"
 		+"<p>The first player to reach the defined amount of influence points, or to eliminate all other players from the board, wins the game.</p>"
 		+"<h2>How to get influence points?</h2>"
 		+"<p>1 influence for each Researched technology and for each uncontested planet under your control.</p>"

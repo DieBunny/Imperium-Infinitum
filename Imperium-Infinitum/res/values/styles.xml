@@ -16,10 +16,41 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="player_style" >
+    <item name="android:layout_width" >180dp</item>
+    <item name="android:layout_height" >60dp</item>
+    <item name="android:textColor" >#FFFFFF</item>
+    <item name="android:gravity" >center</item>
+    <item name="android:textSize" >21dp</item>
+    <item name="android:textStyle" >normal</item>
+    <item name="android:shadowColor" >#0C0B24</item>
+    <item name="android:shadowDx" >19</item>
+    <item name="android:shadowDy" >19</item>
+    <item name="android:shadowRadius" >29</item>
+    <item name="android:focusable">true</item>
+    <item name="android:clickable">true</item>
+  </style>
+  
+    <style  name="button_style">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:textColor">#0C0B24</item>
+    <item name="android:textSize">25dp</item>
+    <item name="android:textStyle">bold</item>
+    </style>
+    
     <color name="White">#FFFFFF</color>
     <color name="ComvellDarkBlue">#14131F</color>
     <color name="Yellow">#FAE41F</color>
     <color name="ElementGray">#3B3535</color>
     <color name="ChillyBlueBlue">#0C0B24</color>
+    <color name="mossGreen">#757449</color>
+    <color name="MysterCloverGreen">#4B490B</color>
+    <color name="Red">#DC143C</color>
+    <color name="Blue">#87CEFA</color>
+    <color name="Green">#66CD00</color>
+    <color name="Gray">#EEE8CD</color>
+
 
 </resources>

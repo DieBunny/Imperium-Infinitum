@@ -1,8 +1,13 @@
 package nich.Package;
 
+import nich.Classes.DoneClickListener;
+import nich.Classes.Fleet;
+import nich.Classes.FleetClickListener;
 import nich.Classes.HexagonDrawing;
+import nich.Classes.Line;
 import nich.Classes.Planet;
 import nich.Classes.Player;
+import nich.Classes.Resources;
 import nich.Package.R.color;
 import nich.Package.R.drawable;
 import android.os.Bundle;
@@ -12,6 +17,8 @@ import android.content.res.Configuration;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
@@ -39,9 +46,10 @@ public class MainPage extends Activity {
 		playerCount = iiglobal.playerList.size();
 		
 		RelativeLayout layout = (RelativeLayout) findViewById(R.id.mainlayout);
+		Button doneButton = (Button) findViewById(R.id.done);
+		doneButton.setOnClickListener(new DoneClickListener());
 		
 		//generates hexgrid
-		
 		if(iiglobal.galaxyGenerated==false)
 		{
 		XmlResourceParser xpp = this.getResources().getXml(R.xml.impinf);
@@ -53,57 +61,84 @@ public class MainPage extends Activity {
 		iiglobal.galaxyGenerated=true;
 		}
 
-		iiglobal.hexDraw.DrawHex(layout, this, playerCount, iiglobal.planetList);
+		iiglobal.hexDraw.DrawHex(layout, this, playerCount, iiglobal.planetList, iiglobal.planetClickListener, iiglobal.resClickListener, iiglobal.phaseClickListener);
 
-
-		
-		//Displays player names somewhere on screen
+			
+		//Writing player names on playerwindows
 		for (int i=0; i<playerCount; i++)
 		{
-			TextView label = new TextView(this);
-			label.setTextColor(getResources().getColor(R.color.White));
-			label.setTextSize(28);
-			RelativeLayout.LayoutParams shareParams = new RelativeLayout.LayoutParams(180, 80);
-			shareParams.leftMargin = Math.abs((int) (40));
-			shareParams.topMargin = Math.abs((int) (i*40+40));
-			label.setLayoutParams(shareParams);
-			label.setText(iiglobal.playerList.get(i).name.toString());
-			layout.addView(label);
+			Button playerwindow = (Button) layout.findViewWithTag("playerwindow"+i);
+			playerwindow.setText(iiglobal.playerList.get(i).name.toString());
+			playerwindow.setTag(iiglobal.playerList.get(i).name.toString()+"window");
+			playerwindow.setCompoundDrawablesWithIntrinsicBounds( iiglobal.playerList.get(i).image, 0, 0, 0);
+			playerwindow.setVisibility(View.VISIBLE);
+			View tokenCircle = layout.findViewWithTag("token"+i);
+			tokenCircle.setTag(iiglobal.playerList.get(i).name.toString()+"token");
 		}
 		
-		//enabling Choose home planet text and arrange ships button
+		
 		if (iiglobal.turn==0)
 		{
-			//!!!!!!!!! have to find place after returning from ship arranging
-			//have to delete rings afterwards
+			//Removing Yellow rings, adding Fleets instead
 			for (Planet planet:iiglobal.planetList)
 			{
 				if (planet.homePlanet==true && planet.owner!=null)
 				{
 					View homeplanetring = (View) layout.findViewWithTag(planet.homePlanet);
 					layout.removeView(homeplanetring);
+					ImageButton homeplanet = (ImageButton) layout.findViewWithTag(planet);
+					int index = iiglobal.playerList.indexOf(planet.owner);
+					homeplanet.setImageResource(iiglobal.triangleArray[index]);
+					//+ ADDING SHIP IMAGE
+					RelativeLayout.LayoutParams shareparams = (LayoutParams) homeplanet.getLayoutParams();
+					int topmargin = shareparams.topMargin;
+					int leftmargin = shareparams.leftMargin;
+					RelativeLayout.LayoutParams shareParams = new RelativeLayout.LayoutParams(40, 40);
+					View fleetview = new View(layout.getContext());
+					for(Fleet fleet : iiglobal.fleetList)
+					{
+						if(fleet.location.equals(planet))
+						{
+							fleetview.setTag(fleet);
+							fleetview.setBackgroundResource(R.drawable.circleshape);
+							GradientDrawable shapeDrawable = (GradientDrawable)fleetview.getBackground();
+							shapeDrawable.setColor(getResources().getColor(iiglobal.colorArray[iiglobal.playerList.indexOf(fleet.owner)]));
+							shareParams.leftMargin = leftmargin +40;
+							shareParams.topMargin = topmargin+40;
+							fleetview.setLayoutParams(shareParams);
+							fleetview.setOnClickListener(iiglobal.fleetClickListener);
+							layout.addView(fleetview);	
+						}
+					}
 				}
 			}
 			
 			int playersleft=0;
 			
+			//enabling Choose home planet text
 			for(Player player :iiglobal.playerList)
 			{
-				
 				if (player.victoryPoints==0)
 				{ 
 					playersleft++;
 					TextView arrangetext = (TextView) findViewById(R.id.arrangeText);
 					arrangetext.setText("Choose your home planet " + player.name);
 					arrangetext.setVisibility(View.VISIBLE);
-					findViewById(R.id.arrangeButton).setVisibility(View.VISIBLE);
 					iiglobal.currentPlayer=player;
 				}
 			}
+			Button playerwindow = (Button) layout.findViewWithTag(iiglobal.currentPlayer.name.toString()+"window");
+			playerwindow.setEnabled(true);
 			
 			if (playersleft==0)
 			{
 				iiglobal.turn=1;
+				iiglobal.tokenOwner = iiglobal.playerList.get(0);
+				iiglobal.SetActiveToken(layout);
+				iiglobal.currentPlayer = iiglobal.tokenOwner;
+				iiglobal.phase=0;
+				iiglobal.ChangeResourceVisibility(layout);
+				layout.findViewWithTag(iiglobal.phaseArray[iiglobal.phase]).setEnabled(true);
 			}
 			else
 			{
@@ -163,8 +198,6 @@ public class MainPage extends Activity {
 	  String testvalue = savedInstanceState.getString("testvalue");
 		Toast toast = Toast.makeText(this, testvalue +"onRestoreInstanceState()", Toast.LENGTH_SHORT);
 		toast.show();
-		Button xxx = (Button) findViewById(R.id.arrangeButton);
-		xxx.setText(testvalue+"onRestore");
 	}
 	    
 	    @Override
@@ -185,6 +218,17 @@ public class MainPage extends Activity {
 		layout.removeAllViews();
 		Intent intent = new Intent(this, ShipArrangingRelative.class);
 		startActivity(intent);
+	}
+	
+	public void OnLayoutClick (View v)
+	{
+		RelativeLayout layout = (RelativeLayout) v;
+		for (int i=layout.getChildCount()-1; i>layout.getChildCount()-20; i--)
+		{
+			if(layout.getChildAt(i).getTag().equals("line"))
+			{layout.removeViewAt(i);}
+		}
+		iiglobal.reachablePlanets.clear();
 	}
 
 }

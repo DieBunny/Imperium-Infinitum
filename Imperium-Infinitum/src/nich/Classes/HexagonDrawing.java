@@ -28,7 +28,7 @@ public class HexagonDrawing {
 	private int[][] centersFor3 = {{-6,11}, {6,5}, {0,17}, {-2,3}, {2,1}, {-10,19},{-8,21}, {10,9}, {8,13}};
 	private int[][] centersFor4 = {{0,5}, {-6,17}, {6,11}, {0,23}, {-8,9}, {-10,13}, {8,1}, {10,3},{-10,25}, {-8,27}, {10,15}, {8,19}};
 	
-	public void DrawHex (RelativeLayout layout, Context context, int n, List<Planet> lastPlanetList)
+	public void DrawHex (RelativeLayout layout, Context context, int n, List<Planet> lastPlanetList, PlanetClickListener planetClickListener, ResourceClickListener resClickListener, PhasesClickListener phaseClickListener)
 	{
 		
 		int z = 0;
@@ -55,110 +55,121 @@ public class HexagonDrawing {
 		float y,x;
 		//d should be changed. not precise for now
 		float d=(float) (oneHex / 2* Math.sqrt(3)-(oneHex/5.5));// d is the distance between 2 points 
+		
+		//DRAW the Big Hexagon!! Image??? Have to return here
+		//All little hexagon image buttons caused outOfMemory problems
+		RelativeLayout.LayoutParams hexParams = new RelativeLayout.LayoutParams(oneHex*24, oneHex*(2*z-1));
+		ImageButton heximage = new ImageButton(context);
+		heximage.setBackgroundColor(Color.TRANSPARENT);
+		heximage.setImageResource(R.drawable.heximage);
+		hexParams.leftMargin = Math.abs((int) (((float) ((-(2*n-0-2)*d)/2.0 + 0*d))+oneHex*1));
+		hexParams.topMargin = Math.abs((int) (((float) ((Math.sqrt(3)*0*d)/2.0))+oneHex*1));
+		heximage.setLayoutParams(hexParams);
+		heximage.setScaleType(ScaleType.FIT_XY);
+		//layout.addView(heximage);
+		
 		for(i=0; i<=(n-1); i++) {
 		    y = (float) ((Math.sqrt(3)*i*d)/2.0);
 		    for (j = 0; j < (2*z-1-i); j++) {
 		        x = (float) ((-(2*n-i-2)*d)/2.0 + j*d);
-		        //creating planet imagebutton
-		        RelativeLayout.LayoutParams shareParams = new RelativeLayout.LayoutParams(oneHex, oneHex);
-				ImageButton imgBtn = new ImageButton(context);
-				imgBtn.setBackgroundColor(Color.TRANSPARENT);
-				imgBtn.setImageResource(R.drawable.hexgraytr);
-				int leftmargin =  Math.abs((int) (x+oneHex*12));
-				int topmargin = Math.abs((int) (y+oneHex*8));
-				shareParams.leftMargin = Math.abs((int) (x+oneHex*12));
-				shareParams.topMargin = Math.abs((int) (y+oneHex*8));
-				imgBtn.setLayoutParams(shareParams);
-				imgBtn.setScaleType(ScaleType.FIT_XY);
-				
-				//creating resource imagebutton first
-				RelativeLayout.LayoutParams resParams = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
-				ImageButton res1Btn = new ImageButton(context);
-				res1Btn.setBackgroundColor(Color.TRANSPARENT);
-				resParams.leftMargin = leftmargin -15;
-				resParams.topMargin = topmargin -35;
-				res1Btn.setLayoutParams(resParams);
-				res1Btn.setScaleType(ScaleType.FIT_XY);
-				
-				//creating resource imagebutton second
-				RelativeLayout.LayoutParams resParams2 = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
-				ImageButton res2Btn = new ImageButton(context);
-				res2Btn.setBackgroundColor(Color.TRANSPARENT);
-				resParams2.leftMargin = leftmargin + oneHex - 30;
-				resParams2.topMargin = topmargin -35;
-				res2Btn.setLayoutParams(resParams2);
-				res2Btn.setScaleType(ScaleType.FIT_XY);
-				
+		        
 				for(Planet planet : lastPlanetList)
 				{
 					if (planet.yPos==i && planet.xPos==j)
 					{
-						setButtonImages(planet, imgBtn, res1Btn, res2Btn);
+						//creating planet imagebutton
+						 RelativeLayout.LayoutParams shareParams = new RelativeLayout.LayoutParams(oneHex, oneHex);
+							ImageButton imgBtn = new ImageButton(context);
+							imgBtn.setBackgroundColor(Color.TRANSPARENT);
+							int leftmargin =  Math.abs((int) (x+oneHex*12));
+							int topmargin = Math.abs((int) (y+oneHex*8));
+							shareParams.leftMargin = Math.abs((int) (x+oneHex*12));
+							shareParams.topMargin = Math.abs((int) (y+oneHex*8));
+							imgBtn.setLayoutParams(shareParams);
+							imgBtn.setScaleType(ScaleType.FIT_XY);
+						//creating resource imagebutton first
+						RelativeLayout.LayoutParams resParams = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
+						ImageButton res1Btn = new ImageButton(context);
+						res1Btn.setBackgroundColor(Color.TRANSPARENT);
+						resParams.leftMargin = leftmargin -15;
+						resParams.topMargin = topmargin -35;
+						res1Btn.setLayoutParams(resParams);
+						res1Btn.setScaleType(ScaleType.FIT_XY);
+						
+						//creating resource imagebutton second
+						RelativeLayout.LayoutParams resParams2 = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
+						ImageButton res2Btn = new ImageButton(context);
+						res2Btn.setBackgroundColor(Color.TRANSPARENT);
+						resParams2.leftMargin = leftmargin + oneHex - 30;
+						resParams2.topMargin = topmargin -35;
+						res2Btn.setLayoutParams(resParams2);
+						res2Btn.setScaleType(ScaleType.FIT_XY);
+						
+						setButtonImages(planet, imgBtn, res1Btn, res2Btn, planetClickListener, resClickListener, phaseClickListener);
+						
+						layout.addView(res1Btn);
+						layout.addView(res2Btn);
+						layout.addView(imgBtn);
 						break;
 					}
 				}
-				//tags - I doubt we will use them
-				//just place where to write down array element`s [i][j]
-				//Planet xxx = new Planet();
-				//xxx.xPos = i;
-				//xxx.yPos = j;
-				//imgBtn.setTag(xxx);
-				layout.addView(imgBtn);
-				layout.addView(res1Btn);
-				layout.addView(res2Btn);
+
+				
+
 		        
 		        if (y!=0) {
-			        RelativeLayout.LayoutParams shareParams1 = new RelativeLayout.LayoutParams(oneHex, oneHex);
-					ImageButton imgBtn1 = new ImageButton(context);
-					imgBtn1.setBackgroundColor(Color.TRANSPARENT);
-					imgBtn1.setImageResource(R.drawable.hexgraytr);
-					int leftmargin1 =  Math.abs((int) (x+oneHex*12));
-					int topmargin1 = Math.abs((int) (-y+oneHex*8));
-					shareParams1.leftMargin = Math.abs((int) (x+oneHex*12));
-					shareParams1.topMargin = Math.abs((int) (-y+oneHex*8));
-					imgBtn1.setLayoutParams(shareParams1);
-					imgBtn1.setScaleType(ScaleType.FIT_XY);
+
 					
-					//creating resource imagebutton first
-					RelativeLayout.LayoutParams resParams3 = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
-					ImageButton res3Btn = new ImageButton(context);
-					res3Btn.setBackgroundColor(Color.TRANSPARENT);
-					resParams3.leftMargin = leftmargin1 -15;
-					resParams3.topMargin = topmargin1 -35;
-					res3Btn.setLayoutParams(resParams3);
-					res3Btn.setScaleType(ScaleType.FIT_XY);
 					
-					//creating resource imagebutton second
-					RelativeLayout.LayoutParams resParams4 = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
-					ImageButton res4Btn = new ImageButton(context);
-					res4Btn.setBackgroundColor(Color.TRANSPARENT);
-					resParams4.leftMargin = leftmargin1 + oneHex - 30;
-					resParams4.topMargin = topmargin1 -35;
-					res4Btn.setLayoutParams(resParams4);
-					res4Btn.setScaleType(ScaleType.FIT_XY);
 					for(Planet planet : lastPlanetList)
 					{
 						if (planet.yPos==-i && planet.xPos==j+i)
 						{
-							setButtonImages(planet, imgBtn1, res3Btn, res4Btn);
+					        RelativeLayout.LayoutParams shareParams1 = new RelativeLayout.LayoutParams(oneHex, oneHex);
+							ImageButton imgBtn1 = new ImageButton(context);
+							imgBtn1.setBackgroundColor(Color.TRANSPARENT);
+							//imgBtn1.setImageResource(R.drawable.redtriangle);
+							int leftmargin1 =  Math.abs((int) (x+oneHex*12));
+							int topmargin1 = Math.abs((int) (-y+oneHex*8));
+							shareParams1.leftMargin = Math.abs((int) (x+oneHex*12));
+							shareParams1.topMargin = Math.abs((int) (-y+oneHex*8));
+							imgBtn1.setLayoutParams(shareParams1);
+							imgBtn1.setScaleType(ScaleType.FIT_XY);
+							
+							//creating resource imagebutton first
+							RelativeLayout.LayoutParams resParams = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
+							ImageButton res3Btn = new ImageButton(context);
+							res3Btn.setBackgroundColor(Color.TRANSPARENT);
+							resParams.leftMargin = leftmargin1 -15;
+							resParams.topMargin = topmargin1 -35;
+							res3Btn.setLayoutParams(resParams);
+							res3Btn.setScaleType(ScaleType.FIT_XY);
+							
+							
+							//creating resource imagebutton second
+							RelativeLayout.LayoutParams resParams2 = new RelativeLayout.LayoutParams(oneHex-30, oneHex-30);
+							ImageButton res4Btn = new ImageButton(context);
+							res4Btn.setBackgroundColor(Color.TRANSPARENT);
+							resParams2.leftMargin = leftmargin1 + oneHex - 30;
+							resParams2.topMargin = topmargin1 -35;
+							res4Btn.setLayoutParams(resParams2);
+							res4Btn.setScaleType(ScaleType.FIT_XY);
+							
+							setButtonImages(planet, imgBtn1, res3Btn, res4Btn, planetClickListener, resClickListener, phaseClickListener);
+							
+							layout.addView(res3Btn);
+							layout.addView(res4Btn);
+							layout.addView(imgBtn1);
 							break;
 						}
 					}
-					//just place where to write down array element`s [i][j]
-					//Planet xyx = new Planet();
-					//xyx.xPos = -i;
-					//xyx.yPos = j+i;
-					//imgBtn1.setTag(xyx);
-					layout.addView(imgBtn1);
-					layout.addView(res3Btn);
-					layout.addView(res4Btn);
 		        }
 		    }
 
 		}
 	}
 	
-	public void setButtonImages (Planet planet, ImageButton imgBtn, ImageButton res1Btn, ImageButton res2Btn)
+	public void setButtonImages (Planet planet, ImageButton imgBtn, ImageButton res1Btn, ImageButton res2Btn, PlanetClickListener planetClickListener, ResourceClickListener resClickListener, PhasesClickListener phaseClickListener)
 	{
 		if (planet.planetType.equals("Oceanic"))
 		{imgBtn.setBackgroundResource(R.drawable.smalloceanic);}
@@ -167,7 +178,8 @@ public class HexagonDrawing {
 		else if (planet.planetType.equals("Desert"))
 		{imgBtn.setBackgroundResource(R.drawable.smalldesert);}
 		imgBtn.setTag(planet);
-		imgBtn.setOnClickListener(new PlanetClickListener());
+		imgBtn.setOnClickListener(planetClickListener);
+		imgBtn.setOnLongClickListener(phaseClickListener);
 		
 		boolean firstplacefree = true;
 		
@@ -225,11 +237,11 @@ public class HexagonDrawing {
 				res2Btn.setTag(res);}
 			}
 		}
-		res1Btn.setOnClickListener(new ResourceClickListener());
-		res2Btn.setOnClickListener(new ResourceClickListener());
+		res1Btn.setOnClickListener(resClickListener);
+		res2Btn.setOnClickListener(resClickListener);
 	}
 
-	public void GetXmlPlanets(int playerCount, XmlResourceParser xpp )
+	public void GetXmlPlanets(final int playerCount, final XmlResourceParser xpp )
 	{
 		String tempName = new String();
 		Random rand = new Random();
@@ -1132,6 +1144,7 @@ public class HexagonDrawing {
 			   
 		   }
 		   RandomRotation();
+	        
 	}
 
 	//this should be void, and change planetList (not return new array)

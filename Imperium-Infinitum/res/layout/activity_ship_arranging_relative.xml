@@ -194,11 +194,11 @@
         android:layout_height="60dp"
         android:layout_marginLeft="850dp"
         android:layout_marginTop="380dp"
-        android:background="@color/ChillyBlueBlue"
+        android:background="@drawable/somebutton"
         android:onClick="DoneButtonClicked"
         android:text="Done"
         android:textColor="@color/Yellow"
-        android:textSize="40sp"
+        android:textSize="40dp"
         android:textStyle="bold" />
 
 </RelativeLayout>

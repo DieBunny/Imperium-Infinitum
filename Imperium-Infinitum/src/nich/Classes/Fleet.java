@@ -8,12 +8,14 @@ public class Fleet {
 		
 	private int size = battleships+destroyers+frigates;
 	
-	public int getSize() {return size;}
+	public int getSize() 
+	{
+		return battleships+destroyers+frigates;
+	}
 //	public void setSize() {size = battleships+destroyers+frigates;}
 	
 	public Player owner;
 	public Planet location;
-	
-	
-	
+	public boolean moved = false;
+
 }

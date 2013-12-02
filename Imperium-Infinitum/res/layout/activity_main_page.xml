@@ -7,7 +7,6 @@
     <HorizontalScrollView android:id="@+id/HorizontalScrollView01" 
                       android:layout_width="wrap_content" 
                       android:layout_height="wrap_content">
-
 <RelativeLayout
     android:id="@+id/mainlayout"
     android:layout_width="wrap_content"
@@ -16,35 +15,258 @@
     android:background="@drawable/spacetile"
     android:minHeight="552dp"
     android:minWidth="1024dp"
+    android:onClick="OnLayoutClick"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainPage" >
+    
+        <Button
+            android:id="@+id/player0"
+            style="@style/player_style"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/playerwindow"
+            android:enabled="false"
+            android:tag="playerwindow0"
+            android:drawableLeft="@drawable/facechtns"
+            android:text="PlayerName"
+            android:visibility="invisible" />
+          <View
+              android:id="@+id/token0"
+              android:layout_width="35dp"
+              android:layout_height="30dp"
+              android:layout_marginLeft="200dp"
+              android:layout_marginTop="95dp"
+              android:background="@drawable/circleshape" 
+              android:tag="token0"
+              android:visibility="invisible"/>
+ 
+        <Button
+            android:id="@+id/player1"
+            style="@style/player_style"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="160dp"
+            android:background="@drawable/playerwindow1"
+            android:enabled="false"
+            android:tag="playerwindow1"
+            android:drawableLeft="@drawable/facechtns"
+            android:text="PlayerName"
+            android:visibility="invisible" />
+          <View
+              android:id="@+id/token1"
+              android:layout_width="35dp"
+              android:layout_height="30dp"
+              android:layout_marginLeft="200dp"
+              android:layout_marginTop="175dp"
+              android:background="@drawable/circleshape" 
+              android:tag="token1"
+              android:visibility="invisible"/>
+        
+         <Button
+             android:id="@+id/player2"
+             style="@style/player_style"
+             android:layout_marginLeft="10dp"
+             android:layout_marginTop="240dp"
+             android:background="@drawable/playerwindow2"
+             android:enabled="false"
+             android:tag="playerwindow2"
+             android:drawableLeft="@drawable/facechtns"
+             android:text="PlayerName"
+             android:visibility="invisible" />
+          <View
+              android:id="@+id/token2"
+              android:layout_width="35dp"
+              android:layout_height="30dp"
+              android:layout_marginLeft="200dp"
+              android:layout_marginTop="255dp"
+              android:background="@drawable/circleshape" 
+              android:tag="token2"
+              android:visibility="invisible"/>
+                
+         <Button
+             android:id="@+id/player3"
+             style="@style/player_style"
+             android:layout_marginLeft="10dp"
+             android:layout_marginTop="320dp"
+             android:background="@drawable/playerwindow3"
+             android:enabled="false"
+             android:tag="playerwindow3"
+             android:drawableLeft="@drawable/facechtns"
+             android:text="PlayerName"
+             android:visibility="invisible" />
+          <View
+              android:id="@+id/token3"
+              android:layout_width="35dp"
+              android:layout_height="30dp"
+              android:layout_marginLeft="200dp"
+              android:layout_marginTop="335dp"
+              android:background="@drawable/circleshape" 
+              android:tag="token3"
+              android:visibility="invisible"/>
+         
+         <Button
+             android:id="@+id/resources"
+             style="@style/player_style"
+             android:layout_marginLeft="200dp"
+             android:layout_marginTop="0dp"
+             android:background="@drawable/playerwindow"
+             android:enabled="false"
+             android:tag="resources"
+             android:drawableLeft="@drawable/facemedusa"
+             android:text="Resources"/>
+         <Button
+             android:id="@+id/research"
+             style="@style/player_style"
+             android:layout_marginLeft="400dp"
+             android:layout_marginTop="0dp"
+             android:background="@drawable/playerwindow"
+             android:enabled="false"
+             android:tag="research"
+             android:drawableLeft="@drawable/facemedusa"
+             android:text="Research"/>
+          <Button
+             android:id="@+id/movement"
+             style="@style/player_style"
+             android:layout_marginLeft="600dp"
+             android:layout_marginTop="0dp"
+             android:background="@drawable/playerwindow"
+             android:enabled="false"
+             android:tag="movement"
+             android:drawableLeft="@drawable/facemedusa"
+             android:text="Movement"/>
+          <Button
+             android:id="@+id/discard"
+             style="@style/player_style"
+             android:layout_marginLeft="800dp"
+             android:layout_marginTop="0dp"
+             android:background="@drawable/playerwindow"
+             android:enabled="false"
+             android:tag="discard"
+             android:drawableLeft="@drawable/facemedusa"
+             android:text="Discard"/>
+
+          <TextView
+              android:id="@+id/arrangeText"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_alignBottom="@+id/player0"
+              android:layout_alignLeft="@+id/resources"
+              android:layout_marginLeft="40dp"
+              android:text="Choose home planet"
+              android:textAppearance="?android:attr/textAppearanceLarge"
+              android:textColor="@color/Gray"
+              android:visibility="invisible" />
+
+
 
     <Button
-        android:id="@+id/arrangeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@layout/activity_main_page"
-        android:layout_marginLeft="320dp"
-        android:background="@color/ChillyBlueBlue"
-        android:onClick="GoToArrangeShipsPage"
-        android:text="  Arrange Ships  "
-        android:textColor="@color/White"
-        android:textColorHint="@color/White"
-        android:visibility="invisible" />
+        android:id="@+id/done"
+        style="@style/button_style"
+        android:layout_alignRight="@+id/resources"
+        android:layout_below="@+id/arrangeText"
+        android:background="@drawable/startbutton"
+        android:enabled="true"
+        android:text="Done" />
+    
 
-    <TextView
-        android:id="@+id/arrangeText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/arrangeButton"
-        android:text="Choose home planet"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/White"
-        android:textColorHint="@color/White"
-        android:visibility="invisible" />
+    
+            <ImageView
+        	android:id="@+id/fuelimage"
+        	android:layout_width="60dp"
+        	android:layout_height="60dp"
+        	android:layout_marginLeft="200dp"
+            android:layout_marginTop="60dp"
+        	android:src="@drawable/fuel" 
+        	android:visibility="gone" />
+               <TextView
+            android:id="@+id/fuelCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_marginLeft="225dp"
+            android:layout_marginTop="120dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textColor="@color/Gray"
+            android:visibility="gone" />
+            <ImageView
+        	android:id="@+id/researchimage"
+        	android:layout_width="60dp"
+        	android:layout_height="60dp"
+        	android:layout_marginLeft="250dp"
+            android:layout_marginTop="60dp"
+        	android:src="@drawable/research" 
+        	android:visibility="gone" />
+                           <TextView
+            android:id="@+id/researchCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_marginLeft="275dp"
+            android:layout_marginTop="120dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textColor="@color/Gray"
+            android:visibility="gone" />
+            <ImageView
+        	android:id="@+id/battleshipimage"
+        	android:layout_width="60dp"
+        	android:layout_height="60dp"
+        	android:layout_marginLeft="300dp"
+            android:layout_marginTop="60dp"
+        	android:src="@drawable/battleship" 
+        	android:visibility="gone" />
+                                       <TextView
+            android:id="@+id/battleshipCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_marginLeft="325dp"
+            android:layout_marginTop="120dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textColor="@color/Gray"
+            android:visibility="gone" />
+            <ImageView
+        	android:id="@+id/destroyerimage"
+        	android:layout_width="60dp"
+        	android:layout_height="60dp"
+        	android:layout_marginLeft="350dp"
+            android:layout_marginTop="60dp"
+        	android:src="@drawable/destroyer"
+        	android:visibility="gone"  />
+                                       <TextView
+            android:id="@+id/destroyerCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_marginLeft="375dp"
+            android:layout_marginTop="120dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textColor="@color/Gray"
+            android:visibility="gone" />
+            <ImageView
+        	android:id="@+id/frigatteimage"
+        	android:layout_width="60dp"
+        	android:layout_height="60dp"
+        	android:layout_marginLeft="400dp"
+            android:layout_marginTop="60dp"
+        	android:src="@drawable/frigatte" 
+        	android:visibility="gone" />
+                                       <TextView
+            android:id="@+id/frigatteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_marginLeft="425dp"
+            android:layout_marginTop="120dp"
+            android:text="0"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textColor="@color/Gray"
+            android:visibility="gone" />
 
 </RelativeLayout>
 
