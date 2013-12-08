@@ -188,7 +188,8 @@ public class ShipArrangingRelative extends Activity {
 				
 			}
 			if (battleshcount+destroyercount+friggcount!=0)
-			{Fleet newFleet1 = new Fleet();
+			{
+				Fleet newFleet1 = new Fleet();
 				newFleet1.battleships = battleshcount;
 				newFleet1.destroyers = destroyercount;
 				newFleet1.frigates = friggcount;

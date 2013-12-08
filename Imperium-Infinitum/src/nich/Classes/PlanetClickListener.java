@@ -14,6 +14,11 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationSet;
+import android.view.animation.TranslateAnimation;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -105,8 +110,6 @@ public class PlanetClickListener implements OnClickListener{
 				//TO DO in discard phase onPlanetClick
 			}
 		}
-
-		
 	}
 	
 	
@@ -117,13 +120,25 @@ public class PlanetClickListener implements OnClickListener{
 			iiglobal.currentPlanet1 = iiglobal.currentFleet.location;
 			iiglobal.currentPlanet2 = clickedPlanet;
 			boolean hasEnemyFleetThere = false;
+			boolean hasFriendlyFleetThere = false;
+			int fleetCount = 0;
+			Fleet secondFleet = new Fleet();
 			for (Fleet fleet:iiglobal.fleetList)
 				{
 					if(fleet.location.equals(clickedPlanet))
 					{
-						hasEnemyFleetThere = true;
+						if(!fleet.owner.equals(iiglobal.currentPlayer))
+						{hasEnemyFleetThere = true;}
+						else if(fleet.owner.equals(iiglobal.currentPlayer))
+						{
+						hasFriendlyFleetThere=true; 
+						fleetCount++;
+						secondFleet = fleet;
+						}
 					}
 				}
+			if (fleetCount>1)
+			{secondFleet = this.GetSecondMovedFleet();}
 			
 			if (hasEnemyFleetThere)
 			{
@@ -131,11 +146,22 @@ public class PlanetClickListener implements OnClickListener{
 				Toast toast = Toast.makeText(context, "BATTLE BEGINS between " +iiglobal.currentPlayer.name + " and " + clickedPlanet.owner.name, Toast.LENGTH_SHORT);
 				toast.show();
 			}
+			else if (hasFriendlyFleetThere)
+			{
+				//JOINING FLEETS HERE!!!
+				Toast toast = Toast.makeText(context, "Joining fleets " +iiglobal.currentFleet.location.planetType + " and " + clickedPlanet.planetType, Toast.LENGTH_SHORT);
+				toast.show();
+				iiglobal.currentFleet.moved=true;
+				iiglobal.currentFleet.location = clickedPlanet;
+				this.JoinFleets(secondFleet);
+				this.UpdatingFleetUI(secondFleet);
+				this.ReleaseBlockadedPlanet();
+			}
 			else
 			{
 			iiglobal.currentFleet.location=clickedPlanet;
 			iiglobal.currentFleet.moved=true;
-			this.UpdatingFleetUI();
+			this.UpdatingFleetUI(null);
 			this.ReleaseBlockadedPlanet();
 				//MOVING, no battle, blocking enemy planet
 				if(clickedPlanet.owner!=null && !clickedPlanet.owner.equals(iiglobal.currentPlayer))
@@ -147,9 +173,70 @@ public class PlanetClickListener implements OnClickListener{
 		}
 	}
 	
-	public void UpdatingFleetUI()
+	public void UpdatingFleetUI(final Fleet secondFleet)
 	{
-		//Deleting previous image
+		AnimationSet set = new AnimationSet(true);
+		int endx;
+		int endy;
+		ImageButton planetButton = (ImageButton) layout.findViewWithTag(clickedPlanet);
+		View fleetview  = layout.findViewWithTag(iiglobal.currentFleet);
+		RelativeLayout.LayoutParams shareparams = (LayoutParams) fleetview.getLayoutParams();
+		int fleetTop = shareparams.topMargin;
+		int fleetLeft = shareparams.leftMargin;
+		shareparams = (LayoutParams) planetButton.getLayoutParams();
+		int targetPlanetTop = shareparams.topMargin + 40;
+		int targetPlanetLeft = shareparams.leftMargin + 40;
+		
+		endx = targetPlanetLeft - fleetLeft;
+		endy = targetPlanetTop - fleetTop;
+		
+		Animation animation = new TranslateAnimation(0, endx,0, endy);  //Change this integer values based on our requirements.
+		animation.setDuration(1500);
+		 //animation.setFillAfter(true);
+		 animation.setFillEnabled(false);
+		 
+		 animation.setAnimationListener(new AnimationListener()
+		 {
+			 @Override
+			 public void onAnimationEnd(Animation arg0) {
+				 //to avoid flicker at the animation end
+				 layout.findViewWithTag(iiglobal.currentFleet).clearAnimation();
+		
+				 RelativeLayout.LayoutParams shareparams = (LayoutParams) view.getLayoutParams();
+				 int topmargin = shareparams.topMargin;
+				 int leftmargin = shareparams.leftMargin;
+				 RelativeLayout.LayoutParams shareParams = new RelativeLayout.LayoutParams(40, 40);
+				 shareParams.leftMargin = leftmargin +40;
+				 shareParams.topMargin = topmargin+40;
+				 View fleetview  = layout.findViewWithTag(iiglobal.currentFleet);
+				 fleetview.setLayoutParams(shareParams);
+				 
+				 if (secondFleet!=null && secondFleet.owner.equals(iiglobal.currentFleet.owner))
+				 {
+					 if(secondFleet.moved)
+					 {layout.removeView(layout.findViewWithTag(secondFleet));}
+				 }
+			 }
+
+			 @Override
+			 public void onAnimationRepeat(Animation animation) {
+				 // TODO Auto-generated method stub
+		
+			 }
+
+			 @Override
+			 public void onAnimationStart(Animation animation) {
+				 iiglobal.DeleteMovementLines(layout);
+		
+			 }}
+				 );
+		 
+		 layout.findViewWithTag(iiglobal.currentFleet).startAnimation(animation);
+
+
+		 
+		/*
+		 //Deleting previous image
 		layout.removeView(layout.findViewWithTag(iiglobal.currentFleet));
 		
 		//+ ADDING new SHIP IMAGE
@@ -170,6 +257,7 @@ public class PlanetClickListener implements OnClickListener{
 				fleetview.setOnClickListener(iiglobal.fleetClickListener);
 				layout.addView(fleetview);	
 			iiglobal.DeleteMovementLines(layout);
+			*/
 	}
 	
 	public void ReleaseBlockadedPlanet()
@@ -192,6 +280,38 @@ public class PlanetClickListener implements OnClickListener{
 				iiglobal.CheckWinner(layout);
 			}
 		}
+	}
+	
+	public Fleet GetSecondMovedFleet()
+	{
+		Fleet secondFleet = new Fleet();
+		for (Fleet fleet:iiglobal.fleetList)
+		{
+			if(fleet.location.equals(clickedPlanet))
+			{
+				if(fleet.moved)
+				{
+					secondFleet=fleet;
+				}
+			}
+		}
+		return secondFleet;
+	}
+	
+	public void JoinFleets(Fleet secondFleet)
+	{
+		//only if both fleets has moved
+		if (iiglobal.currentFleet.moved && secondFleet.moved)
+		{
+			iiglobal.JoinFleets(iiglobal.currentFleet, secondFleet);
+		}
+		//or there is no possible movements for second fleet
+		else if(!iiglobal.CanFlySomewhere(secondFleet))
+		{
+			secondFleet.moved=true;
+			iiglobal.JoinFleets(iiglobal.currentFleet, secondFleet);
+		}
+		
 	}
 
 }
